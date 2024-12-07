@@ -1,0 +1,82 @@
+ORG 0000H
+                                                          RS BIT P2.0
+	  RW BIT P2.1
+	  EN BIT P2.2
+	  MOV A,#38H
+	  ACALL CMD
+	  MOV A,#0EH
+	  ACALL CMD
+	  MOV A,#80H
+	  ACALL CMD
+	  MOV A,#06H
+	  ACALL CMD
+	  MOV A,#'S'
+	  ACALL DATA1
+	  MOV A,#'A'
+	  ACALL DATA1
+	  MOV A,#'V'
+	  ACALL DATA1
+	  MOV A,#'E'
+	  ACALL DATA1
+	  MOV A,#'E'
+	  ACALL DATA1
+	  MOV A,#'T'
+	  ACALL DATA1
+	  MOV A,#'H'
+	  ACALL DATA1
+	  MOV A,#'A'
+	  ACALL DATA1
+	  MOV A,#0C0H
+	  ACALL CMD
+	  MOV A,#'U'
+	  ACALL DATA1
+	  MOV A,#'N'
+	  ACALL DATA1
+	  MOV A,#'I'
+	  ACALL DATA1
+	  MOV A,#'V'
+	  ACALL DATA1
+	  MOV A,#'E'
+	  ACALL DATA1
+	  MOV A,#'R'
+	  ACALL DATA1
+	  MOV A,#'S'
+	  ACALL DATA1
+	  MOV A,#'I'
+	  ACALL DATA1
+	  MOV A,#'T'
+	  ACALL DATA1
+	  MOV A,#'Y'
+	  ACALL DATA1
+	  
+	  
+	  
+CMD:ACALL READY
+      MOV P1,A
+	  CLR RS
+	  CLR RW
+	  SETB EN
+	  ACALL DELAY
+	  CLR EN
+	  RET
+READY:SETB P1.7
+	  CLR RS
+	  SETB RW
+	  H:CLR EN
+	  ACALL DELAY
+	  SETB EN
+	  JB P1.7,H
+	  RET
+DATA1:ACALL READY
+      MOV P1,A
+	  SETB RS
+	  CLR RW
+	  SETB EN
+	  ACALL DELAY
+	  CLR EN
+DELAY:MOV R4,#180
+HERE1:MOV R3,#255
+HERE2:DJNZ R3,HERE2
+      DJNZ R4,HERE1
+ RET
+ END
