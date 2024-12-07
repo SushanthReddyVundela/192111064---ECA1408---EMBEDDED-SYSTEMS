@@ -1,0 +1,27 @@
+long duracion;
+long distancia;
+int echo=8;
+int trig=9;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(trig,OUTPUT);
+  pinMode(echo,INPUT);
+}
+
+void loop()
+{
+  digitalWrite(trig,LOW);
+  delayMicroseconds(4);
+  digitalWrite(trig,HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig,LOW);
+
+  duracion=pulseIn(echo,HIGH);
+  distancia=duracion/58.4;
+  Serial.print("Distancia:");
+  Serial.print(distancia);
+  Serial.println("cm");
+  delay(100);
+}
